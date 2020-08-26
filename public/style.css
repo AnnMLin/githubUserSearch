@@ -1,0 +1,12 @@
+:root {
+
+}
+
+body {
+  background-color: rgb(250, 250, 250);
+  font-family: 'Questrial', sans-serif;
+}
+
+input {
+  font-family: inherit;
+}
