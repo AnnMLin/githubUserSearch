@@ -1,11 +1,11 @@
-import { GOT_ALL_USERS, getAllUsers } from './user'
+import { GOT_USERS, searchUsers } from './search'
 
 const actions = {
-  getAllUsers
+  searchUsers
 }
 
-const actionTypes = {
-  GOT_ALL_USERS
+export const actionTypes = {
+  GOT_USERS
 }
 
 export default actions

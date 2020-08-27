@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { URLSearchParams } from 'url';
 
 export const GOT_ALL_USERS = 'GOT_ALL_USERS'
 

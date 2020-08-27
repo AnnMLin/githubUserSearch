@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import actions from './store/actions'
 import { Home } from './components'
 
 
