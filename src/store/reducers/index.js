@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import user from './user'
+import users from './users'
+import urls from './urls'
 
 const reducer = combineReducers({
-  user
+  users,
+  urls
 })
 
 export default reducer
