@@ -43,7 +43,7 @@ const Results = () => {
       }
       else {
         dispatch(actions.searchUsers(keyword, APIPage))
-          .dispatch(actions.fetchUsers(page))
+          .then(() => dispatch(actions.fetchUsers(page)))
       }
     }
   }, [keyword, page])
