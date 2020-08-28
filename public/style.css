@@ -1,5 +1,7 @@
 :root {
-
+  --padding-small: 10px;
+  --padding-between-lines: 5px;
+  --margin-user-card: 13px;
 }
 
 body {
@@ -9,4 +11,69 @@ body {
 
 input {
   font-family: inherit;
+}
+
+#main{
+  height: 100vh;
+  width: 100vw;
+}
+
+#results{
+  /* top: 10vh; */
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.user-container{
+  background-color: white; 
+  width: 350px;
+  height: auto;
+  margin: var(--margin-user-card);
+  padding: var(--padding-small);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.user-info{
+  display: flex;
+  flex-direction: row;
+}
+
+.info-left{
+  width: 100px;
+}
+
+.user-avatar{
+  width: 100px;
+}
+
+.info-right{
+  padding-left: var(--padding-small);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-name{
+  padding-bottom: var(--padding-between-lines);
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+.login, .email, .loc, .repo, .followers{
+  font-size: 12px;
+}
+
+.email, .loc, .repo, .followers{
+  padding-top: var(--padding-between-lines);
+}
+
+.user-bio{
+  padding-top: var(--padding-between-lines);
+  font-size: 12px;
 }

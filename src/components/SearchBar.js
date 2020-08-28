@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import actions from '../store/actions'
 
 const SearchBar = () => {
@@ -7,6 +8,7 @@ const SearchBar = () => {
   const [keyword, setKeyword] = useState('')
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleChange = e => {
     setKeyword(e.target.value)
@@ -14,15 +16,9 @@ const SearchBar = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('SERACH!', keyword)
     
-    //dispatch keyword to thunk
-    dispatch(actions.searchUsers(keyword))
-    //make api calls
-    //dispatch results to reducer
-    //redirect
-    //show loading
-    //show results when state change
+    dispatch(actions.gotKeyword(keyword))
+    history.push(`/search/${keyword}/1`)
   }
 
   return(

@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Home } from './components'
+import React from 'react'
+import { Home, Main } from './components'
+import { Switch, Route } from 'react-router-dom'
 
 
 const App = () => {
 
-  const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(actions.getAllUsers())
-  // }, [])
-
   return(
     <div>
-      <Home />
+      <Switch>
+        <Route path='/search/:keyword/:page' component={Main} />
+        <Route path='/' component={Home} />
+      </Switch>
     </div>
   )
 }
