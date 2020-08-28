@@ -4,10 +4,8 @@ const initialState = 0
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
-    case actionTypes.GOT_TOTAL_COUNT:
-      return action.totalCount
-    case actionTypes.CLEAR_TOTAL_COUNT:
-      return 0
+    case actionTypes.GOT_PAGE:
+      return action.page
     default:
       return state
   }

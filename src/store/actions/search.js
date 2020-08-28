@@ -5,6 +5,8 @@ export const GOT_URLS = 'GOT_URLS'
 export const GOT_TOTAL_COUNT = 'GOT_TOTAL_COUNT'
 export const GOT_KEYWORD = 'GOT_KEYWORD'
 export const CLEAR_USERS = 'CLEAR_USERS'
+export const GOT_PAGE = 'GOT_PAGE'
+export const CLEAR_TOTAL_COUNT = 'CLEAR_TOTAL_COUNT'
 
 // action creator
 const gotUsers = users => ({type: GOT_USERS, users})
@@ -12,6 +14,8 @@ const gotUrls = urls => ({type: GOT_URLS, urls})
 const gotTotalCount = totalCount => ({type: GOT_TOTAL_COUNT, totalCount})
 export const gotKeyword = keyword => ({type: GOT_KEYWORD, keyword})
 export const clearUsers = () => ({type: CLEAR_USERS})
+export const gotPage = page => ({type: GOT_PAGE, page})
+export const clearTotalCount = () => ({type: CLEAR_TOTAL_COUNT})
 
 const config = {
   headers: {

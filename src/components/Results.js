@@ -14,6 +14,7 @@ const Results = () => {
   console.log('KEYWORD_STORE:', keywordOnFile)
   const users = useSelector(state => state.users)
   console.log('USERS', users)
+  const totalCount = useSelector(state => state.totalCount)
 
   const dispatch = useDispatch()
 
@@ -23,6 +24,7 @@ const Results = () => {
     // update keywordOnFile in case user pressed back/forward button
     if(keyword !== keywordOnFile) {
       dispatch(actions.clearUsers())
+      dispatch(actions.clearTotalCount())
       dispatch(actions.gotKeyword(keyword))
     }
 
@@ -36,6 +38,9 @@ const Results = () => {
 
   return(
     <div id='results'>
+      {totalCount > 0?
+      <div>{totalCount} users</div> : null
+      }
       {users.length ? 
       users.map(({avatarUrl, name, login, email, location, repos, followers, bio}) => (
         <div key={login} className='user-container'>
