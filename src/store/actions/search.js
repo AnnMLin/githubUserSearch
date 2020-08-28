@@ -41,14 +41,20 @@ export const searchUsers = (keyword, APIPage) => dispatch => (
 )
 
 export const fetchUsers = num => (dispatch, getState) => {
-  console.log('IN FETCH USERS')
+  console.log('IN FETCH USERS', num)
   const { urls } = getState()
   const userPerPage = 10
-  const startIdx = (num-1)*userPerPage
-  const paginatedUrls = urls.slice(startIdx%100, startIdx+userPerPage%100)
-  console.log(`PAGINATION: [${startIdx+1}, ${startIdx+userPerPage}]`)
+  const startIdx = (num-1)*userPerPage //110 ~ 120
+  const paginatedUrls = urls.slice(startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
 
-  dispatch(gotPagination([startIdx+1, startIdx+userPerPage]))
+  let startPage
+  if(num%userPerPage === 0) {
+    startPage = num - userPerPage + 1
+  } else {
+    startPage = Math.floor(num/userPerPage)*10 + 1
+  }
+  dispatch(gotPagination([startPage, startPage+userPerPage-1]))
+  console.log(`PAGINATION: [${startPage}, ${startPage+userPerPage-1}]`)
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
     .then(data => {

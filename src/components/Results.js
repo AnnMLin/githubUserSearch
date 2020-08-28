@@ -34,12 +34,14 @@ const Results = () => {
         .then(() => dispatch(actions.fetchUsers(page)))
     }
     else if(page !== pageOnFile) {
+      console.log('HERE?')
       dispatch(actions.clearUsers)
+      dispatch(actions.gotPage(page))
       if(page<=pagination[1] && page>=pagination[0]) {
+        console.log('AM I HERE?')
         dispatch(actions.fetchUsers(page))
       }
       else {
-        dispatch(actions.gotPage(page))
         dispatch(actions.searchUsers(keyword, APIPage))
           .dispatch(actions.fetchUsers(page))
       }
