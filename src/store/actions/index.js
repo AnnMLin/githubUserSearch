@@ -1,4 +1,4 @@
-import { GOT_USERS, GOT_URLS, GOT_TOTAL_COUNT, GOT_KEYWORD, CLEAR_USERS, GOT_PAGE, CLEAR_TOTAL_COUNT, gotKeyword, searchUsers, fetchUsers, clearUsers, gotPage, clearTotalCount } from './search'
+import { GOT_USERS, GOT_URLS, GOT_TOTAL_COUNT, GOT_KEYWORD, CLEAR_USERS, GOT_PAGE, CLEAR_TOTAL_COUNT, GOT_PAGINATION, gotKeyword, searchUsers, fetchUsers, clearUsers, gotPage, clearTotalCount } from './search'
 
 const actions = {
   searchUsers,
@@ -16,7 +16,8 @@ export const actionTypes = {
   GOT_KEYWORD,
   CLEAR_USERS,
   GOT_PAGE,
-  CLEAR_TOTAL_COUNT
+  CLEAR_TOTAL_COUNT,
+  GOT_PAGINATION
 }
 
 export default actions

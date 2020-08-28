@@ -20,13 +20,13 @@ const SearchBar = () => {
     e.preventDefault()
 
     // if keyword != keywordOnFile, clear users so results won't load
-    if(keyword !== keywordOnFile) {
-      dispatch(actions.clearUsers())
-      dispatch(actions.clearTotalCount())
-    }
+    // if(keyword !== keywordOnFile) {
+    //   dispatch(actions.clearUsers())
+    //   dispatch(actions.clearTotalCount())
+    // }
     
-    dispatch(actions.gotKeyword(keyword))
-    dispatch(actions.gotPage(1))
+    // dispatch(actions.gotKeyword(keyword))
+    // dispatch(actions.gotPage(1))
     history.push(`/search/${keyword}/1`)
   }
 

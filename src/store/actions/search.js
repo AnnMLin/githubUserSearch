@@ -7,6 +7,7 @@ export const GOT_KEYWORD = 'GOT_KEYWORD'
 export const CLEAR_USERS = 'CLEAR_USERS'
 export const GOT_PAGE = 'GOT_PAGE'
 export const CLEAR_TOTAL_COUNT = 'CLEAR_TOTAL_COUNT'
+export const GOT_PAGINATION = 'GOT_PAGINATION'
 
 // action creator
 const gotUsers = users => ({type: GOT_USERS, users})
@@ -16,6 +17,7 @@ export const gotKeyword = keyword => ({type: GOT_KEYWORD, keyword})
 export const clearUsers = () => ({type: CLEAR_USERS})
 export const gotPage = page => ({type: GOT_PAGE, page})
 export const clearTotalCount = () => ({type: CLEAR_TOTAL_COUNT})
+const gotPagination = pagination => ({type: GOT_PAGINATION, pagination})
 
 const config = {
   headers: {
@@ -24,8 +26,8 @@ const config = {
 }
 
 // thunk creator
-export const searchUsers = keyword => dispatch => (
-  axios.get(`https://api.github.com/search/users?q=${keyword}&per_page=100`, config)
+export const searchUsers = (keyword, APIPage) => dispatch => (
+  axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
     .then(({data}) => {
       const totalCount = data['total_count']
       dispatch(gotTotalCount(totalCount))
@@ -41,11 +43,18 @@ export const searchUsers = keyword => dispatch => (
 export const fetchUsers = num => (dispatch, getState) => {
   console.log('IN FETCH USERS')
   const { urls } = getState()
-  const userPerPage = 9
+  const userPerPage = 10
   const startIdx = (num-1)*userPerPage
-  const paginatedUrls = urls.slice(startIdx, startIdx+userPerPage)
+  const paginatedUrls = urls.slice(startIdx%100, startIdx+userPerPage%100)
+  console.log(`PAGINATION: [${startIdx+1}, ${startIdx+userPerPage}]`)
+
+  dispatch(gotPagination([startIdx+1, startIdx+userPerPage]))
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
+    .then(data => {
+      console.log(data)
+      return data
+    })
     .then(data => (
       data.map(({data}) => {
         const {name, avatar_url, email, login, location, public_repos, followers, bio} = data

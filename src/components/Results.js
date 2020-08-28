@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import actions from '../store/actions'
+import { PageNav } from '.'
 
 
 const Results = () => {
@@ -12,28 +13,38 @@ const Results = () => {
 
   const keywordOnFile = useSelector(state => state.keyword)
   console.log('KEYWORD_STORE:', keywordOnFile)
+  const pageOnFile = useSelector(state => state.page)
+  console.log('PAGE_STORE:', pageOnFile)
   const users = useSelector(state => state.users)
   console.log('USERS', users)
   const totalCount = useSelector(state => state.totalCount)
+  const pagination = useSelector(state => state.pagination)
 
   const dispatch = useDispatch()
 
-  // when params keyword change, make search api call to gh get 100 urls
-  // get first 10 urls, make user api call to gh
+  const APIPage = Math.floor((page-1)/10) + 1
+
   useEffect(() => {
-    // update keywordOnFile in case user pressed back/forward button
     if(keyword !== keywordOnFile) {
-      dispatch(actions.clearUsers())
       dispatch(actions.clearTotalCount())
+      dispatch(actions.clearUsers())
       dispatch(actions.gotKeyword(keyword))
+      dispatch(actions.gotPage(page))
+      dispatch(actions.searchUsers(keyword, APIPage))
+        .then(() => dispatch(actions.fetchUsers(page)))
     }
-
-    dispatch(actions.searchUsers(keyword))
-      .then(() => {
+    else if(page !== pageOnFile) {
+      dispatch(actions.clearUsers)
+      if(page<=pagination[1] && page>=pagination[0]) {
         dispatch(actions.fetchUsers(page))
-      })
-  }, [keyword])
-
+      }
+      else {
+        dispatch(actions.gotPage(page))
+        dispatch(actions.searchUsers(keyword, APIPage))
+          .dispatch(actions.fetchUsers(page))
+      }
+    }
+  }, [keyword, page])
 
 
   return(
@@ -61,7 +72,8 @@ const Results = () => {
           </div>
         </div>
       ))
-        : 'LOADING...' }
+      : 'LOADING...' }
+      {users.length ? <PageNav /> : null}
     </div>
   )
 }

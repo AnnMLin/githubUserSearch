@@ -82,3 +82,12 @@ input {
   width: var(--fade-width);
   background-image: linear-gradient(to right, transparent, white);
 }
+
+.page-nav{
+  display: flex;
+  flex-direction: row;
+}
+
+.page-nav > div{
+  padding: var(--padding-small)
+}
