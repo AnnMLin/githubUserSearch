@@ -1,4 +1,5 @@
 :root {
+  --padding-medium: 20px;
   --padding-small: 10px;
   --padding-between-lines: 5px;
   --margin-user-card: 13px;
@@ -24,6 +25,15 @@ input {
 
 #results{
   width: 80%;
+}
+
+.search-bar{
+  margin: var(--padding-medium);
+}
+
+.total-count, .loading{
+  margin: var(--padding-medium);
+  font-size: 21px;
 }
 
 .user-container{
@@ -90,4 +100,8 @@ input {
 
 .page-nav > div{
   padding: var(--padding-small)
+}
+
+.bold{
+  font-weight: bold;
 }

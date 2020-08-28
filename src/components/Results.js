@@ -8,8 +8,6 @@ import { PageNav } from '.'
 const Results = () => {
 
   const { page, keyword } = useParams()
-  console.log('PAGE:', page)
-  console.log('KEYWORD:', keyword)
 
   const keywordOnFile = useSelector(state => state.keyword)
   console.log('KEYWORD_STORE:', keywordOnFile)
@@ -34,11 +32,9 @@ const Results = () => {
         .then(() => dispatch(actions.fetchUsers(page)))
     }
     else if(page !== pageOnFile) {
-      console.log('HERE?')
       dispatch(actions.clearUsers)
       dispatch(actions.gotPage(page))
       if(page<=pagination[1] && page>=pagination[0]) {
-        console.log('AM I HERE?')
         dispatch(actions.fetchUsers(page))
       }
       else {
@@ -52,7 +48,7 @@ const Results = () => {
   return(
     <div id='results'>
       {totalCount > 0?
-      <div>{totalCount} users</div> : null
+      <div className='total-count'>{totalCount} users</div> : null
       }
       {users.length ? 
       users.map(({avatarUrl, name, login, email, location, repos, followers, bio}) => (
@@ -74,7 +70,7 @@ const Results = () => {
           </div>
         </div>
       ))
-      : 'LOADING...' }
+      : <div className='loading'>LOADING...</div> }
       {users.length ? <PageNav /> : null}
     </div>
   )

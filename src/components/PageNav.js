@@ -6,7 +6,6 @@ const PageNav = () => {
   
   const page = useSelector(state => state.page)
   const pagination = useSelector(state => state.pagination)
-  // const totalCount = useSelector(state => state.totalCount)
 
   const { keyword } = useParams()
   const history = useHistory()
@@ -44,8 +43,8 @@ const PageNav = () => {
       {pagination[0] === 1 ? null : <div onClick={handlePreviousGroup}>{'<<'}</div>}
       {page === '1' ? null : <div onClick={handleBack}>{'<'}</div>}
       {pages.map(num => {
-        const fontWeight = 'none'
-        if(num === page) fontWeight = 'bold'
+        let fontWeight = 'none'
+        if(num == page) fontWeight = 'bold'
         return(
           <div key={num} className={fontWeight} onClick={()=>handleGoToPage(num)}>{num}</div>
         )

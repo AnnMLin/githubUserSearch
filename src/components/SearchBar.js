@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import actions from '../store/actions'
 
 const SearchBar = () => {
 
   const [keyword, setKeyword] = useState('')
-
-  const dispatch = useDispatch()
-  const keywordOnFile = useSelector(state => state.keyword)
 
   const history = useHistory()
 

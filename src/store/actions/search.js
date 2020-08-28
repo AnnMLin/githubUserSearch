@@ -44,7 +44,7 @@ export const fetchUsers = num => (dispatch, getState) => {
   console.log('IN FETCH USERS', num)
   const { urls } = getState()
   const userPerPage = 10
-  const startIdx = (num-1)*userPerPage //110 ~ 120
+  const startIdx = (num-1)*userPerPage
   const paginatedUrls = urls.slice(startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
 
   let startPage
@@ -57,10 +57,6 @@ export const fetchUsers = num => (dispatch, getState) => {
   console.log(`PAGINATION: [${startPage}, ${startPage+userPerPage-1}]`)
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
-    .then(data => {
-      console.log(data)
-      return data
-    })
     .then(data => (
       data.map(({data}) => {
         const {name, avatar_url, email, login, location, public_repos, followers, bio} = data
