@@ -10,28 +10,36 @@ const Results = () => {
   console.log('PAGE:', page)
   console.log('KEYWORD:', keyword)
 
-  const keywordInStore = useSelector(state => state.keyword)
-  console.log('KEYWORD_STORE:', keywordInStore)
+  const keywordOnFile = useSelector(state => state.keyword)
+  console.log('KEYWORD_STORE:', keywordOnFile)
   const users = useSelector(state => state.users)
   console.log('USERS', users)
 
   const dispatch = useDispatch()
 
-  // when component first mounted (from home page to result page), make search api call to gh get 100 urls
+  // when params keyword change, make search api call to gh get 100 urls
   // get first 10 urls, make user api call to gh
   useEffect(() => {
+    // update keywordOnFile in case user pressed back/forward button
+    if(keyword !== keywordOnFile) {
+      dispatch(actions.clearUsers())
+      dispatch(actions.gotKeyword(keyword))
+    }
+
     dispatch(actions.searchUsers(keyword))
       .then(() => {
         dispatch(actions.fetchUsers(page))
       })
-  }, [])
+  }, [keyword])
+
+
 
   return(
     <div id='results'>
       {users.length ? 
       users.map(({avatarUrl, name, login, email, location, repos, followers, bio}) => (
         <div key={login} className='user-container'>
-          <div className='user-info'>
+          <div className='inner-container'>
             <div className='info-left'>
               <img className='user-avatar' src={avatarUrl} alt='user-avatar' />
             </div>
@@ -42,12 +50,13 @@ const Results = () => {
               {location? <div className='loc'>{location}</div> : null}
               <div className='repo'>{repos} repos</div>
               <div className='followers'>{followers} followers</div>
+              {bio?<div className='user-bio'>{bio}</div> : null}
             </div>
+            <div className='fade-out'></div>
           </div>
-          {bio?<div className='user-bio'>{bio}</div> : null}
         </div>
       ))
-        : 'LOADING' }
+        : 'LOADING...' }
     </div>
   )
 }

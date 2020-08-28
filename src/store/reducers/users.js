@@ -17,6 +17,8 @@ const reducer = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.GOT_USERS:
       return action.users
+    case actionTypes.CLEAR_USERS:
+      return []
     default:
       return state
   }

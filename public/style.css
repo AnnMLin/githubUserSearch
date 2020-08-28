@@ -2,6 +2,10 @@
   --padding-small: 10px;
   --padding-between-lines: 5px;
   --margin-user-card: 13px;
+  --user-card-width: 500px;
+  --avatar-size: 120px;
+  --fade-width: 20px;
+  --info-right-width: calc(var(--user-card-width) - var(--padding-small) - var(--avatar-size) - var(--fade-width))
 }
 
 body {
@@ -19,40 +23,33 @@ input {
 }
 
 #results{
-  /* top: 10vh; */
-  height: 90vh;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: 80%;
 }
 
 .user-container{
   background-color: white; 
-  width: 350px;
-  height: auto;
+  width: var(--user-card-width);
+  height: 120px;
   margin: var(--margin-user-card);
   padding: var(--padding-small);
+}
+
+.inner-container{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
 }
 
-.user-info{
-  display: flex;
-  flex-direction: row;
-}
-
 .info-left{
-  width: 100px;
+  width: var(--avatar-size);
 }
 
 .user-avatar{
-  width: 100px;
+  width: var(--avatar-size);
 }
 
 .info-right{
+  width: var(--info-right-width);
   padding-left: var(--padding-small);
   display: flex;
   flex-direction: column;
@@ -74,6 +71,14 @@ input {
 }
 
 .user-bio{
+  /* height: 1.1em; */
+  width: 1000px;
   padding-top: var(--padding-between-lines);
   font-size: 12px;
+  overflow: hidden;
+}
+
+.fade-out{
+  width: var(--fade-width);
+  background-image: linear-gradient(to right, transparent, white);
 }

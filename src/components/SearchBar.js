@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import actions from '../store/actions'
 
@@ -8,6 +8,8 @@ const SearchBar = () => {
   const [keyword, setKeyword] = useState('')
 
   const dispatch = useDispatch()
+  const keywordOnFile = useSelector(state => state.keyword)
+
   const history = useHistory()
 
   const handleChange = e => {
@@ -16,6 +18,9 @@ const SearchBar = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+
+    // if keyword != keywordOnFile, clear users so results won't load
+    if(keyword !== keywordOnFile) dispatch(actions.clearUsers())
     
     dispatch(actions.gotKeyword(keyword))
     history.push(`/search/${keyword}/1`)
