@@ -8,6 +8,9 @@ const PageNav = () => {
   const pagination = useSelector(state => state.pagination)
   const users = useSelector(state => state.users)
   const urls = useSelector(state => state.urls)
+  const totalCount = useSelector(state => state.totalCount)
+
+  const maxPage = Math.min(Math.ceil(totalCount/10),100)
 
   const { keyword } = useParams()
   const history = useHistory()
@@ -61,8 +64,8 @@ const PageNav = () => {
           <div key={num} className={fontWeight} onClick={()=>handleGoToPage(num)}>{num}</div>
         )
       })}
-      {page === '100' ? null : <div onClick={handleNext}>></div>}
-      {pagination[1] === 100 ? null : <div onClick={handleNextGroup}>>></div>}
+      {page === maxPage.toString() ? null : <div onClick={handleNext}>></div>}
+      {pagination[1] === maxPage ? null : <div onClick={handleNextGroup}>>></div>}
     </div>
   )
 }

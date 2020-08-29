@@ -41,10 +41,10 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
   return axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
     .then(({data}) => {
       const totalCount = data['total_count']
-      console.log('TOTALCOUNT:', totalCount)
+      // console.log('TOTALCOUNT:', totalCount)
       dispatch(gotTotalCount(totalCount))
       const userUrls = data.items.map(userObj => userObj.url) //array of user objects
-      console.log(userUrls)
+      console.log('SEARCH URLS: ', userUrls)
       dispatch(gotUrls(userUrls))
     })
     .catch(err => {
@@ -56,15 +56,18 @@ export const fetchUsers = num => (dispatch, getState) => {
   console.log('IN FETCH USERS', num)
 
   const userPerPage = 10
-  const startIdx = (num-1)*userPerPage
+  
   let startPage
   if(num%userPerPage === 0) {
     startPage = num - userPerPage + 1
   } else {
     startPage = Math.floor(num/userPerPage)*10 + 1
   }
-  dispatch(gotPagination([startPage, startPage+userPerPage-1]))
-  console.log(`PAGINATION: [${startPage}, ${startPage+userPerPage-1}]`)
+  const { totalCount } = getState()
+  const maxPage = Math.min(Math.ceil(totalCount/10),100)
+  const endPage = Math.min(startPage+userPerPage-1, maxPage)
+  dispatch(gotPagination([startPage, endPage]))
+  console.log(`PAGINATION: [${startPage}, ${endPage}]`)
 
   // if page can be found in localStorage, load it from localStorage then dispatch to store
   const usersLS = localStorage.getItem(num+'')
@@ -74,7 +77,10 @@ export const fetchUsers = num => (dispatch, getState) => {
   }
 
   const { urls } = getState()
+  const startIdx = (num-1)*userPerPage
+  console.log('URL SLICE:', startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
   const paginatedUrls = urls.slice(startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
+  console.log('SLICEDURLS:', paginatedUrls)
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
     .then(data => (
