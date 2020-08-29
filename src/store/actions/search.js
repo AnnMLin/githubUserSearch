@@ -25,6 +25,8 @@ const config = {
   }
 }
 
+const localStorage = window.localStorage
+
 // thunk creator
 export const searchUsers = (keyword, APIPage) => dispatch => (
   axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
@@ -42,6 +44,14 @@ export const searchUsers = (keyword, APIPage) => dispatch => (
 
 export const fetchUsers = num => (dispatch, getState) => {
   console.log('IN FETCH USERS', num)
+
+  // if page can be found in localStorage, load it from localStorage then dispatch to store
+  const usersLS = localStorage.getItem(num+'')
+  if(usersLS) {
+    const users = JSON.parse(usersLS)
+    return dispatch(gotUsers(users))
+  }
+
   const { urls } = getState()
   const userPerPage = 10
   const startIdx = (num-1)*userPerPage
@@ -59,7 +69,7 @@ export const fetchUsers = num => (dispatch, getState) => {
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
     .then(data => (
       data.map(({data}) => {
-        const {name, avatar_url, email, login, location, public_repos, followers, bio} = data
+        const {name, avatar_url, email, login, location, public_repos, followers, bio, html_url} = data
         return {
           name,
           avatarUrl : avatar_url,
@@ -68,7 +78,8 @@ export const fetchUsers = num => (dispatch, getState) => {
           location,
           repos: public_repos,
           followers,
-          bio
+          bio,
+          url: html_url
         }
       })
     ))

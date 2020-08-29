@@ -22,17 +22,24 @@ const Results = () => {
 
   const APIPage = Math.floor((page-1)/10) + 1
 
+  const localStorage = window.localStorage
+
   useEffect(() => {
     if(keyword !== keywordOnFile) {
+
+      localStorage.clear()
       dispatch(actions.clearTotalCount())
       dispatch(actions.clearUsers())
+
       dispatch(actions.gotKeyword(keyword))
       dispatch(actions.gotPage(page))
       dispatch(actions.searchUsers(keyword, APIPage))
         .then(() => dispatch(actions.fetchUsers(page)))
     }
     else if(page !== pageOnFile) {
-      dispatch(actions.clearUsers)
+      
+      dispatch(actions.clearUsers())
+
       dispatch(actions.gotPage(page))
       if(page<=pagination[1] && page>=pagination[0]) {
         dispatch(actions.fetchUsers(page))
@@ -51,24 +58,26 @@ const Results = () => {
       <div className='total-count'>{totalCount} users</div> : null
       }
       {users.length ? 
-      users.map(({avatarUrl, name, login, email, location, repos, followers, bio}) => (
-        <div key={login} className='user-container'>
-          <div className='inner-container'>
-            <div className='info-left'>
-              <img className='user-avatar' src={avatarUrl} alt='user-avatar' />
+      users.map(({avatarUrl, name, login, email, location, repos, followers, bio, url}) => (
+        <a target='_blank' href={url} key={login}>
+          <div className='user-container'>
+            <div className='inner-container'>
+              <div className='info-left'>
+                <img className='user-avatar' src={avatarUrl} alt='user-avatar' />
+              </div>
+              <div className='info-right'>
+                {name? <div className='user-name'>{name}</div> : null}
+                <div className='login'>{login}</div>
+                {email? <div className='email'>{email}</div> : null}
+                {location? <div className='loc'>{location}</div> : null}
+                <div className='repo'>{repos} repos</div>
+                <div className='followers'>{followers} followers</div>
+                {bio?<div className='user-bio'>{bio}</div> : null}
+              </div>
+              <div className='fade-out'></div>
             </div>
-            <div className='info-right'>
-              {name? <div className='user-name'>{name}</div> : null}
-              <div className='login'>{login}</div>
-              {email? <div className='email'>{email}</div> : null}
-              {location? <div className='loc'>{location}</div> : null}
-              <div className='repo'>{repos} repos</div>
-              <div className='followers'>{followers} followers</div>
-              {bio?<div className='user-bio'>{bio}</div> : null}
-            </div>
-            <div className='fade-out'></div>
           </div>
-        </div>
+        </a>
       ))
       : <div className='loading'>LOADING...</div> }
       {users.length ? <PageNav /> : null}

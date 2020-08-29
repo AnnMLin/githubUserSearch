@@ -14,6 +14,11 @@ body {
   font-family: 'Questrial', sans-serif;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 input {
   font-family: inherit;
 }
@@ -42,6 +47,11 @@ input {
   height: 120px;
   margin: var(--margin-user-card);
   padding: var(--padding-small);
+  box-shadow: 5px 5px 5px rgb(220, 220, 220);
+}
+
+.user-container:hover{
+  box-shadow: 5px 5px 5px rgb(200, 200, 200);
 }
 
 .inner-container{

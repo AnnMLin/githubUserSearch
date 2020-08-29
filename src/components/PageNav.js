@@ -6,6 +6,8 @@ const PageNav = () => {
   
   const page = useSelector(state => state.page)
   const pagination = useSelector(state => state.pagination)
+  const users = useSelector(state => state.users)
+  const urls = useSelector(state => state.urls)
 
   const { keyword } = useParams()
   const history = useHistory()
@@ -15,6 +17,8 @@ const PageNav = () => {
   for(let i = pagination[0]; i <= pagination[1]; i++) {
     pages.push(i)
   }
+
+  const localStorage = window.localStorage
 
   const handlePreviousGroup = () => {
     history.push(`/search/${keyword}/${pagination[1]-10}`)
@@ -34,8 +38,9 @@ const PageNav = () => {
     else handleGoToPage(Number(page)+1)
   }
 
-  const handleGoToPage = page => {
-    history.push(`/search/${keyword}/${page}`)
+  const handleGoToPage = target => {
+    localStorage.setItem(page, JSON.stringify(users))
+    history.push(`/search/${keyword}/${target}`)
   }
 
   return(
