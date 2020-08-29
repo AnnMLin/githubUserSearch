@@ -19,8 +19,10 @@ const SearchBar = () => {
   return(
     <div>
       <form className='search-bar' onSubmit={handleSubmit}>
-        <input className='keyword' type='text' name='keyword' onChange={handleChange} required/>
-        <input className='submit button' type='submit' value='Search'/>
+        <div>
+          <input className='keyword' type='text' placeholder='Search Github users ...' name='keyword' onChange={handleChange} required/>
+        </div>        
+        <input className='submit' type='submit' value='Search'/>
       </form>
     </div>
   )

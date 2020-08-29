@@ -4,7 +4,7 @@ import { SearchBar } from '../components'
 const Home = () => {
 
   return (
-    <div>
+    <div id='home'>
       <SearchBar />
     </div>
   )
