@@ -28,8 +28,17 @@ const config = {
 const localStorage = window.localStorage
 
 // thunk creator
-export const searchUsers = (keyword, APIPage) => dispatch => (
-  axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
+export const searchUsers = (keyword, APIPage) => dispatch => {
+
+  // if urls can be found in localStorage, load it from localStorage then dispatch to store
+  const urlsLS = localStorage.getItem(`API${APIPage}`)
+  if(urlsLS) {
+    const urls = JSON.parse(urlsLS)
+    const fakePromise = () => dispatch(gotUrls(urls))
+    return Promise.all([fakePromise])
+  }
+  
+  return axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
     .then(({data}) => {
       const totalCount = data['total_count']
       dispatch(gotTotalCount(totalCount))
@@ -40,10 +49,21 @@ export const searchUsers = (keyword, APIPage) => dispatch => (
     .catch(err => {
       console.error(err)
     })
-)
+}
 
 export const fetchUsers = num => (dispatch, getState) => {
   console.log('IN FETCH USERS', num)
+
+  const userPerPage = 10
+  const startIdx = (num-1)*userPerPage
+  let startPage
+  if(num%userPerPage === 0) {
+    startPage = num - userPerPage + 1
+  } else {
+    startPage = Math.floor(num/userPerPage)*10 + 1
+  }
+  dispatch(gotPagination([startPage, startPage+userPerPage-1]))
+  console.log(`PAGINATION: [${startPage}, ${startPage+userPerPage-1}]`)
 
   // if page can be found in localStorage, load it from localStorage then dispatch to store
   const usersLS = localStorage.getItem(num+'')
@@ -53,18 +73,7 @@ export const fetchUsers = num => (dispatch, getState) => {
   }
 
   const { urls } = getState()
-  const userPerPage = 10
-  const startIdx = (num-1)*userPerPage
   const paginatedUrls = urls.slice(startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
-
-  let startPage
-  if(num%userPerPage === 0) {
-    startPage = num - userPerPage + 1
-  } else {
-    startPage = Math.floor(num/userPerPage)*10 + 1
-  }
-  dispatch(gotPagination([startPage, startPage+userPerPage-1]))
-  console.log(`PAGINATION: [${startPage}, ${startPage+userPerPage-1}]`)
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
     .then(data => (

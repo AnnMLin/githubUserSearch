@@ -19,21 +19,28 @@ const PageNav = () => {
   }
 
   const localStorage = window.localStorage
+  const APIPage = Math.floor((page-1)/10) + 1
 
   const handlePreviousGroup = () => {
+    localStorage.setItem(page, JSON.stringify(users))
+    localStorage.setItem(`API${APIPage}`, JSON.stringify(urls))
     history.push(`/search/${keyword}/${pagination[1]-10}`)
   }
 
   const handleNextGroup = () => {
+    localStorage.setItem(page, JSON.stringify(users))
+    localStorage.setItem(`API${APIPage}`, JSON.stringify(urls))
     history.push(`/search/${keyword}/${pagination[0]+10}`)
   }
 
   const handleBack = () => {
+    localStorage.setItem(page, JSON.stringify(users))
     if(page%10 === 1) handlePreviousGroup()
     else handleGoToPage(Number(page)-1)
   }
 
   const handleNext = () => {
+    localStorage.setItem(page, JSON.stringify(users))
     if(page%10 === 0) handleNextGroup()
     else handleGoToPage(Number(page)+1)
   }

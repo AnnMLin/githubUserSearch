@@ -46,7 +46,10 @@ const Results = () => {
       }
       else {
         dispatch(actions.searchUsers(keyword, APIPage))
-          .then(() => dispatch(actions.fetchUsers(page)))
+          .then(() => {
+            console.log('WAS I HERE?')
+            dispatch(actions.fetchUsers(page))
+          })
       }
     }
   }, [keyword, page])
