@@ -58,7 +58,7 @@ const Results = () => {
   return(
     <div id='results'>
       {totalCount > 0?
-      <div className='total-count'>{totalCount} users</div> : null
+      <div id='total-count'>{totalCount} users</div> : null
       }
       {users.length ? 
       users.map(({avatarUrl, name, login, email, location, repos, followers, bio, url}) => (
