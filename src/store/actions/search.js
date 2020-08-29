@@ -41,6 +41,7 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
   return axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
     .then(({data}) => {
       const totalCount = data['total_count']
+      console.log('TOTALCOUNT:', totalCount)
       dispatch(gotTotalCount(totalCount))
       const userUrls = data.items.map(userObj => userObj.url) //array of user objects
       console.log(userUrls)

@@ -57,31 +57,36 @@ const Results = () => {
 
   return(
     <div id='results'>
-      {totalCount > 0?
-      <div id='total-count'>{totalCount} users</div> : null
-      }
-      {users.length ? 
-      users.map(({avatarUrl, name, login, email, location, repos, followers, bio, url}) => (
-        <a target='_blank' href={url} key={login}>
-          <div className='user-container'>
-            <div className='inner-container'>
-              <div className='info-left'>
-                <img className='user-avatar' src={avatarUrl} alt='user-avatar' />
+      {totalCount > -1 ?
+      // search results have returned
+      <div>
+        <div id='total-count'>{totalCount} users</div> 
+        <div>
+        {users.length ? 
+        users.map(({avatarUrl, name, login, email, location, repos, followers, bio, url}) => (
+          <a target='_blank' href={url} key={login}>
+            <div className='user-container'>
+              <div className='inner-container'>
+                <div className='info-left'>
+                  <img className='user-avatar' src={avatarUrl} alt='user-avatar' />
+                </div>
+                <div className='info-right'>
+                  {name? <div className='user-name'>{name}</div> : null}
+                  <div className='login'>{login}</div>
+                  {email? <div className='email'>{email}</div> : null}
+                  {location? <div className='loc'>{location}</div> : null}
+                  <div className='repo'>{repos} repos</div>
+                  <div className='followers'>{followers} followers</div>
+                  {bio?<div className='user-bio'>{bio}</div> : null}
+                </div>
+                <div className='fade-out'></div>
               </div>
-              <div className='info-right'>
-                {name? <div className='user-name'>{name}</div> : null}
-                <div className='login'>{login}</div>
-                {email? <div className='email'>{email}</div> : null}
-                {location? <div className='loc'>{location}</div> : null}
-                <div className='repo'>{repos} repos</div>
-                <div className='followers'>{followers} followers</div>
-                {bio?<div className='user-bio'>{bio}</div> : null}
-              </div>
-              <div className='fade-out'></div>
             </div>
-          </div>
-        </a>
-      ))
+          </a> 
+        )) : null }
+        </div>
+      </div>
+      // still searching
       : <div className='loading'>LOADING...</div> }
       {users.length ? <PageNav /> : null}
     </div>
