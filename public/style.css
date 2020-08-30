@@ -180,7 +180,7 @@ input:focus, select:focus{
   background-color: rgb(200, 220, 220);
   border-radius: 20px;
   overflow: hidden; 
-  padding-left: 2px;
+  margin-left: var(--padding-mini);
 }
 
 /*input*/
@@ -263,7 +263,15 @@ input:focus, select:focus{
 
 /*button*/
 #main form .submit {
-  /* display: none; */
+  width: 31px;
+  font-size: 0px;
+  background-image: url('/images/search.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#main form .submit:hover {
+  cursor: pointer;
 }
 
 .warning {
