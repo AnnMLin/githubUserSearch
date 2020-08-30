@@ -5,6 +5,7 @@ import totalCount from './totalCount'
 import keyword from './keyword'
 import page from './page'
 import pagination from './pagination'
+import serverError from './serverError'
 
 const reducer = combineReducers({
   users,
@@ -12,7 +13,8 @@ const reducer = combineReducers({
   totalCount,
   keyword,
   page,
-  pagination
+  pagination,
+  serverError
 })
 
 export default reducer

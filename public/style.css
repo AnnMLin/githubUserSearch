@@ -215,7 +215,7 @@ input:focus, select:focus{
   padding-top: 2px;
 }
 
-#total-count, .loading {
+#total-count, .loading, .server-error {
   width: var(--user-card-width);
   margin: var(--padding-medium);
   font-size: 21px;

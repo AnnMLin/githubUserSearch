@@ -8,6 +8,8 @@ export const CLEAR_USERS = 'CLEAR_USERS'
 export const GOT_PAGE = 'GOT_PAGE'
 export const CLEAR_TOTAL_COUNT = 'CLEAR_TOTAL_COUNT'
 export const GOT_PAGINATION = 'GOT_PAGINATION'
+export const GOT_SERVER_ERROR = 'GOT_SERVER_ERROR'
+export const CLEAR_SERVER_ERROR = 'CLEAR_SERVER_ERROR'
 
 // action creator
 const gotUsers = users => ({type: GOT_USERS, users})
@@ -18,6 +20,8 @@ export const clearUsers = () => ({type: CLEAR_USERS})
 export const gotPage = page => ({type: GOT_PAGE, page})
 export const clearTotalCount = () => ({type: CLEAR_TOTAL_COUNT})
 const gotPagination = pagination => ({type: GOT_PAGINATION, pagination})
+const gotServerError = () => ({type: GOT_SERVER_ERROR})
+const clearServerError = () => ({type: CLEAR_SERVER_ERROR})
 
 const config = {
   headers: {
@@ -30,6 +34,8 @@ const localStorage = window.localStorage
 // thunk creator
 // all the GET FROM LOCALSTORAGE happens in thunk before making api calls
 export const searchUsers = (keyword, APIPage) => dispatch => {
+
+  dispatch(clearServerError())
 
   // LOCAL STORAGE: if urls can be found in localStorage, load it from localStorage then dispatch to store
   const urlsLS = localStorage.getItem(`API${APIPage}`)
@@ -49,6 +55,7 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
     })
     .catch(err => {
       console.error(err)
+      dispatch(gotServerError())
     })
 }
 
@@ -102,5 +109,6 @@ export const fetchUsers = num => (dispatch, getState) => {
     })
     .catch(err => {
       console.error(err)
+      dispatch(gotServerError())
     })
 }

@@ -14,6 +14,7 @@ const Results = () => {
   const users = useSelector(state => state.users)
   const totalCount = useSelector(state => state.totalCount)
   const pagination = useSelector(state => state.pagination)
+  const serverError = useSelector(state => state.serverError)
 
   const dispatch = useDispatch()
 
@@ -89,6 +90,8 @@ const Results = () => {
         )) : null }
         </div>
       </div>
+      // server error
+      : serverError ? <div className='server-error'>You've made too many requests:( <br/>Give it a minute then refresh page to view search results:)</div>
       // still searching
       : <div className='loading'>LOADING...</div> }
       {users.length ? <PageNav /> : null}
