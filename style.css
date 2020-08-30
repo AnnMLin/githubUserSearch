@@ -78,8 +78,34 @@ input:focus, select:focus{
 }
 
 #home .advance-methods {
+  display: none;
+  font-size: 15px;
+}
+
+#home .close {
   display: flex;
   flex-direction: column;
+  height: 0px;
+  animation: close 1s ease-in-out;
+  overflow: hidden;
+}
+
+@keyframes close {
+  from {height: 223px;}
+  to {height: 0px;}
+}
+
+#home .show {
+  display: flex;
+  flex-direction: column;
+  height: 223px;
+  animation: drop 1s ease-in-out;
+  overflow: hidden;
+}
+
+@keyframes drop {
+  from {height: 0px;}
+  to {height: 223px;}
 }
 
 #home .advance-methods>div {
@@ -154,7 +180,7 @@ input:focus, select:focus{
   background-color: rgb(200, 220, 220);
   border-radius: 20px;
   overflow: hidden; 
-  padding-left: 2px;
+  margin-left: var(--padding-mini);
 }
 
 /*input*/
@@ -182,10 +208,36 @@ input:focus, select:focus{
 #main .advance-methods {
   margin: var(--padding-small);
   margin-left: 43px;
+  display: none;
+  font-size: 13px;
+}
+
+#main .close {
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  font-size: 13px;
+  height: 0px;
+  animation: close 1s ease-in-out;
+  overflow: hidden;
+}
+
+@keyframes close {
+  from {height: 170px;}
+  to {height: 0px;}
+}
+
+#main .show {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  height: 170px;
+  animation: drop2 1s ease-in-out;
+  overflow: hidden;
+}
+
+@keyframes drop2 {
+  from {height: 0px;}
+  to {height: 170px;}
 }
 
 #main .advance-methods>div {
@@ -204,9 +256,22 @@ input:focus, select:focus{
   font-size: 13px;
 }
 
+#main #drop-down {
+  background-color: white;
+  margin-top: var(--padding-mini);
+}
+
 /*button*/
 #main form .submit {
-  /* display: none; */
+  width: 31px;
+  font-size: 0px;
+  background-image: url('/images/search.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#main form .submit:hover {
+  cursor: pointer;
 }
 
 .warning {
@@ -215,7 +280,7 @@ input:focus, select:focus{
   padding-top: 2px;
 }
 
-#total-count, .loading {
+#total-count, .loading, .server-error {
   width: var(--user-card-width);
   margin: var(--padding-medium);
   font-size: 21px;
