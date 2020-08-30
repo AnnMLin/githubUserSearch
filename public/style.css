@@ -98,6 +98,7 @@ input:focus, select:focus{
 /*button*/
 #home form .submit {
   font-size: 20px;
+  padding-left: var(--padding-small);
 }
 
 #home form .submit:hover {

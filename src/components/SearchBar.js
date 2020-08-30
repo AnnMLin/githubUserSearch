@@ -141,7 +141,7 @@ const SearchBar = () => {
           </div>
           <div>
             <label>Language:</label>
-            <select id='drop-down' form='search'>
+            <select id='drop-down' name='language' form='search' onChange={handleChange}>
               <option value={language}>{language? language : '--'}</option>
               <option value='Python'>Python</option>
               <option value='Javascript'>Javascript</option>
