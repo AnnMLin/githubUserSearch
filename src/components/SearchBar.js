@@ -17,8 +17,19 @@ const SearchBar = () => {
   const [state, setState] = useState(initialState)
   const {keyword, fullname, repos, followers, language, warning} = state
 
-  const [advance, setAdvance] = useState(false)
+  const [advance, setAdvance] = useState(-1)
   const [keywordWarning, setKeywordWarning] = useState(false)
+  let show = ''
+  switch(advance) {
+    case -1:
+      show = 'advance-methods'
+      break
+    case 0:
+      show = 'advance-methods close'
+      break
+    case 1:
+      show = 'advance-methods show'   
+  }
 
   const history = useHistory()
 
@@ -60,11 +71,20 @@ const SearchBar = () => {
   }
 
   const handleSetAdvance = () => {
+    // when a keyword is not provided
     if(!keyword) {
       setKeywordWarning(true)
+      setAdvance(-1)
     } else {
       setKeywordWarning(false)
-      setAdvance(!advance)
+
+      // if drop-down is already opened
+      if(advance === 1) {
+        setAdvance(0)
+      } else {
+        //if drop-down is closed
+        setAdvance(1)
+      }
     }
   }
 
@@ -132,8 +152,8 @@ const SearchBar = () => {
         </div>
         <div className={'click-for-advance'} onClick={handleSetAdvance}>Add filters +</div>
         {keywordWarning? <div className='warning filter-warning'>**Please enter keyword first**</div> : null}
-        {advance? 
-        <div className='advance-methods'>
+        {/*ADVANCE METHODS BELOW*/}
+        <div className={show}>
           <div>
             <label>Name:</label>
             <input className='filter-fullname' type='text' name='fullname' value={fullname} placeholder='Enter name here...' onChange={handleChange}/>
@@ -155,7 +175,7 @@ const SearchBar = () => {
             </select>
           </div>
         </div>
-        : null}
+
       </form>
     </div>
   )
