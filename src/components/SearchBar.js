@@ -15,7 +15,7 @@ const SearchBar = () => {
     warning: ''
   }
   const [state, setState] = useState(initialState)
-  const {keyword, fullname, repos, followers, language, warning} = state
+  let {keyword, fullname, repos, followers, language, warning} = state
 
   const [advance, setAdvance] = useState(-1)
   const [keywordWarning, setKeywordWarning] = useState(false)
@@ -47,6 +47,8 @@ const SearchBar = () => {
   const handleSubmit = e => {
     e.preventDefault()
 
+    keyword = keyword.replace(/#/g, '%23')
+  
     // build query string
     // check if fullname contains character other than \w
     let fullnameString = ''
@@ -91,6 +93,12 @@ const SearchBar = () => {
     }
   }
 
+  const handleClearFilters = () => {
+    setState({...state, fullname: '', repos: 0, followers: 0, language: ''})
+    let selectBar = document.querySelector('#drop-down')
+    selectBar.selectedIndex = 0
+  }
+
   useEffect(() => {
     //extract keyword & filter info from url query string
     if(keywordOnFile) { 
@@ -101,6 +109,7 @@ const SearchBar = () => {
       } else {
         keywordFromQuery = keywordOnFile
       }
+      keywordFromQuery = keywordFromQuery.replace(/%23/g, '#')
 
       const nameRe = /fullname:((\w|\s)+)(\+|$)/g
       const nameArr = nameRe.exec(keywordOnFile)
@@ -173,13 +182,10 @@ const SearchBar = () => {
           <div>
             <label>Language:</label>
             <select id='drop-down' name='language' form='search' onChange={handleChange}>
-              <option value={language}>{language? language : '--'}</option>
+              <option value=''>--</option>
               {ghLans.map(lan => {
                 let lanVal = lan
-                
-                if(lanVal.includes('#')) {
-                  lanVal = lanVal.replace('#', '%23')
-                }
+                lanVal = lanVal.replace('#', '%23')
 
                 return (
                   <option key={lanVal} value={lanVal}>{lan}</option>
@@ -187,6 +193,7 @@ const SearchBar = () => {
               })}
             </select>
           </div>
+          <div className='clear-filters' onClick={handleClearFilters}>Clear filters</div>
         </div>
 
       </form>
