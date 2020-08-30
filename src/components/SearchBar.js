@@ -1,52 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-// import { AdvanceSearch } from '.'
 
 const SearchBar = () => {
 
-  // const [keyword, setKeyword] = useState('')
   const keywordOnFile = useSelector(state => state.keyword)
 
-  /* for advance search */
-  const [state, setState] = useState({
+  const initialState = {
     keyword: '',
     fullname: '',
     repos: 0,
     followers: 0,
     language: '',
     warning: ''
-  })
+  }
+  const [state, setState] = useState(initialState)
   const {keyword, fullname, repos, followers, language, warning} = state
-  // const [fullname, setFullname] = useState('')
-  // const [repos, setRepos] = useState(0)
-  // const [followers, setFollowers] = useState(0)
-  /* ------------------ */
+
   const [advance, setAdvance] = useState(false)
 
   const history = useHistory()
 
   const handleChange = e => {
-    // setKeyword(e.target.value)
-    setState({...state, [e.target.name]: e.target.value})
+    if(e.target.name === 'keyword') {
+      setState({...initialState, keyword: e.target.value})
+    } else {
+      setState({...state, [e.target.name]: e.target.value})
+    }
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('LANGUAGE:', language)
 
+    // build query string
     // check if fullname contains character other than \w
     let fullnameString = ''
     if(fullname) {
       const checkNameRe = /^(\w|\s)+$/g
       const namecheckArr = checkNameRe.exec(fullname)
-      console.log('NAME CHECK:', namecheckArr)
       
       if(namecheckArr) {
         fullnameString = `+fullname:${fullname}`
       } else {
         // show warning
-        setState({...state, warning: 'Name can only contain alphabets and space'})
+        setState({...state, warning: '**Name can only contain alphabets and space'})
         return
       }
     }
@@ -56,7 +53,8 @@ const SearchBar = () => {
     const followersString = followers ? `+followers:>${followers}` : ''
     const languageString = language ? `+language:${language}` : ''
     const query= keyword + fullnameString + reposString + followersString + languageString
-    // history.push(`/search/${keyword}/1`)
+
+    //redirect
     history.push(`/search/${query}/1`)
   }
 
@@ -65,8 +63,8 @@ const SearchBar = () => {
   }
 
   useEffect(() => {
+    //extract keyword & filter info from url query string
     if(keywordOnFile) { 
-      // setKeyword(keywordOnFile)
       const idxOfPlus = keywordOnFile.indexOf('+')
       let keywordFromQuery
       if(idxOfPlus > 0) {
@@ -123,7 +121,7 @@ const SearchBar = () => {
           </div>        
           <input className='submit' type='submit' value='Search'/>
         </div>
-        <div className={'click-for-advance'} onClick={handleSetAdvance}>Advance search options +</div>
+        <div className={'click-for-advance'} onClick={handleSetAdvance}>Add filters +</div>
         {advance? 
         <div className='advance-methods'>
           <div>

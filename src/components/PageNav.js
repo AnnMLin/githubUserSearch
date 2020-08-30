@@ -15,6 +15,7 @@ const PageNav = () => {
   const { keyword } = useParams()
   const history = useHistory()
 
+  // building buttom page display
   const pages = []
 
   for(let i = pagination[0]; i <= pagination[1]; i++) {
@@ -24,6 +25,7 @@ const PageNav = () => {
   const localStorage = window.localStorage
   const APIPage = Math.floor((page-1)/10) + 1
 
+  // all the SAVE TO LOCALSTORAGE happens here when user about to leave a page
   const handlePreviousGroup = () => {
     localStorage.setItem(page, JSON.stringify(users))
     localStorage.setItem(`API${APIPage}`, JSON.stringify(urls))

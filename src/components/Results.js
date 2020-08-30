@@ -10,11 +10,8 @@ const Results = () => {
   const { page, keyword } = useParams()
 
   const keywordOnFile = useSelector(state => state.keyword)
-  console.log('KEYWORD_STORE:', keywordOnFile)
   const pageOnFile = useSelector(state => state.page)
-  console.log('PAGE_STORE:', pageOnFile)
   const users = useSelector(state => state.users)
-  console.log('USERS', users)
   const totalCount = useSelector(state => state.totalCount)
   const pagination = useSelector(state => state.pagination)
 
@@ -25,6 +22,9 @@ const Results = () => {
   const localStorage = window.localStorage
 
   useEffect(() => {
+
+    // the ONLY place in this whole app that make dispatches to store
+    // COMPARE: if keyword changed means new search => erase everything in store & localStorage => perform new search
     if(keyword !== keywordOnFile) {
 
       localStorage.clear()
@@ -36,18 +36,21 @@ const Results = () => {
       dispatch(actions.searchUsers(keyword, APIPage))
         .then(() => dispatch(actions.fetchUsers(page)))
     }
+    // COMPARE: navigating through pages in same search 
     else if(page !== pageOnFile) {
       
       dispatch(actions.clearUsers())
 
       dispatch(actions.gotPage(page))
+
+      //COMPARE: if requesting page is inside THIS page group => fetch next page of users
       if(page<=pagination[1] && page>=pagination[0]) {
         dispatch(actions.fetchUsers(page))
       }
+      //COMPARE: if requesting page is in another page group => perform new search with same keyword (but different api page)
       else {
         dispatch(actions.searchUsers(keyword, APIPage))
           .then(() => {
-            console.log('WAS I HERE?')
             dispatch(actions.fetchUsers(page))
           })
       }

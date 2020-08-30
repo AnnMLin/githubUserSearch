@@ -165,7 +165,6 @@ input:focus, select:focus{
 }
 
 #main .click-for-advance {
-  /* padding: 5px; */
   font-size: 11px;
   text-decoration: underline;
   display: flex;
@@ -197,13 +196,19 @@ input:focus, select:focus{
   font-size: 13px;
 }
 
+#main .advance-methods select {
+  font-size: 13px;
+}
+
 /*button*/
 #main form .submit {
   display: none;
 }
 
-#results {
-  /* width: 80%; */
+.warning {
+  color: red;
+  font-size: 12px;
+  padding-top: 2px;
 }
 
 #total-count, .loading {
@@ -262,7 +267,6 @@ input:focus, select:focus{
 }
 
 .user-bio {
-  /* height: 1.1em; */
   width: 1000px;
   padding-top: var(--padding-between-lines);
   font-size: 12px;

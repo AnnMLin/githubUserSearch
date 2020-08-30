@@ -28,9 +28,10 @@ const config = {
 const localStorage = window.localStorage
 
 // thunk creator
+// all the GET FROM LOCALSTORAGE happens in thunk before making api calls
 export const searchUsers = (keyword, APIPage) => dispatch => {
 
-  // if urls can be found in localStorage, load it from localStorage then dispatch to store
+  // LOCAL STORAGE: if urls can be found in localStorage, load it from localStorage then dispatch to store
   const urlsLS = localStorage.getItem(`API${APIPage}`)
   if(urlsLS) {
     const urls = JSON.parse(urlsLS)
@@ -41,10 +42,9 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
   return axios.get(`https://api.github.com/search/users?q=${keyword}&page=${APIPage}&per_page=100`, config)
     .then(({data}) => {
       const totalCount = data['total_count']
-      // console.log('TOTALCOUNT:', totalCount)
       dispatch(gotTotalCount(totalCount))
+
       const userUrls = data.items.map(userObj => userObj.url) //array of user objects
-      console.log('SEARCH URLS: ', userUrls)
       dispatch(gotUrls(userUrls))
     })
     .catch(err => {
@@ -53,7 +53,6 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
 }
 
 export const fetchUsers = num => (dispatch, getState) => {
-  console.log('IN FETCH USERS', num)
 
   const userPerPage = 10
   
@@ -67,9 +66,8 @@ export const fetchUsers = num => (dispatch, getState) => {
   const maxPage = Math.min(Math.ceil(totalCount/10),100)
   const endPage = Math.min(startPage+userPerPage-1, maxPage)
   dispatch(gotPagination([startPage, endPage]))
-  console.log(`PAGINATION: [${startPage}, ${endPage}]`)
 
-  // if page can be found in localStorage, load it from localStorage then dispatch to store
+  // LOCALSTORAGE: if page can be found in localStorage, load it from localStorage then dispatch to store
   const usersLS = localStorage.getItem(num+'')
   if(usersLS) {
     const users = JSON.parse(usersLS)
@@ -78,9 +76,9 @@ export const fetchUsers = num => (dispatch, getState) => {
 
   const { urls } = getState()
   const startIdx = (num-1)*userPerPage
-  console.log('URL SLICE:', startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
+
   const paginatedUrls = urls.slice(startIdx%100, startIdx%100===90? 100 : (startIdx+userPerPage)%100)
-  console.log('SLICEDURLS:', paginatedUrls)
+
 
   return Promise.all(paginatedUrls.map(url => axios.get(url, config)))
     .then(data => (
