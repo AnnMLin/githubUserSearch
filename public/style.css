@@ -206,7 +206,7 @@ input:focus, select:focus{
 
 /*button*/
 #main form .submit {
-  display: none;
+  /* display: none; */
 }
 
 .warning {
