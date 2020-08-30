@@ -29,6 +29,9 @@ const SearchBar = () => {
       break
     case 1:
       show = 'advance-methods show'   
+      break
+    default:
+      break
   }
 
   const history = useHistory()
@@ -64,6 +67,9 @@ const SearchBar = () => {
     const reposString = repos ? `+repos:>${repos}` : ''
     const followersString = followers ? `+followers:>${followers}` : ''
     const languageString = language ? `+language:${language}` : ''
+    // if(languageString.includes('#')) {
+    //   languageString.replaceAll('#', '%23')
+    // }
     const query= keyword + fullnameString + reposString + followersString + languageString
 
     //redirect
@@ -125,6 +131,9 @@ const SearchBar = () => {
       let languageFromQuery = ''
       if(languageArr) {
         languageFromQuery = languageArr[1]
+        // if(languageFromQuery.includes('%23')) {
+        //   languageFromQuery.replaceAll('Sharp', '#')
+        // }
       }
 
       setState({...state, 
@@ -171,7 +180,17 @@ const SearchBar = () => {
             <label>Language:</label>
             <select id='drop-down' name='language' form='search' onChange={handleChange}>
               <option value={language}>{language? language : '--'}</option>
-              {ghLans.map(lan => <option value={lan}>{lan}</option>)}
+              {ghLans.map(lan => {
+                let lanVal = lan
+                
+                if(lanVal.includes('#')) {
+                  lanVal = lanVal.replace('#', '%23')
+                }
+
+                return (
+                  <option key={lanVal} value={lanVal}>{lan}</option>
+                )
+              })}
             </select>
           </div>
         </div>
