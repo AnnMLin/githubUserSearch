@@ -31,7 +31,7 @@ const Results = () => {
       dispatch(actions.clearTotalCount())
       dispatch(actions.clearUsers())
 
-      dispatch(actions.gotKeyword(keyword))
+      dispatch(actions.gotKeyword(keyword)) //sets the query string to store
       dispatch(actions.gotPage(page))
       dispatch(actions.searchUsers(keyword, APIPage))
         .then(() => dispatch(actions.fetchUsers(page)))
