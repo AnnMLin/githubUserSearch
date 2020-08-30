@@ -67,9 +67,6 @@ const SearchBar = () => {
     const reposString = repos ? `+repos:>${repos}` : ''
     const followersString = followers ? `+followers:>${followers}` : ''
     const languageString = language ? `+language:${language}` : ''
-    // if(languageString.includes('#')) {
-    //   languageString.replaceAll('#', '%23')
-    // }
     const query= keyword + fullnameString + reposString + followersString + languageString
 
     //redirect
@@ -131,9 +128,6 @@ const SearchBar = () => {
       let languageFromQuery = ''
       if(languageArr) {
         languageFromQuery = languageArr[1]
-        // if(languageFromQuery.includes('%23')) {
-        //   languageFromQuery.replaceAll('Sharp', '#')
-        // }
       }
 
       setState({...state, 
