@@ -18,6 +18,7 @@ const SearchBar = () => {
   const {keyword, fullname, repos, followers, language, warning} = state
 
   const [advance, setAdvance] = useState(false)
+  const [keywordWarning, setKeywordWarning] = useState(false)
 
   const history = useHistory()
 
@@ -59,7 +60,12 @@ const SearchBar = () => {
   }
 
   const handleSetAdvance = () => {
-    setAdvance(!advance)
+    if(!keyword) {
+      setKeywordWarning(true)
+    } else {
+      setKeywordWarning(false)
+      setAdvance(!advance)
+    }
   }
 
   useEffect(() => {
@@ -111,6 +117,9 @@ const SearchBar = () => {
     }
   }, [keywordOnFile])
 
+  // language array
+  const ghLans = [ 'ABAP', 'C', 'C#', 'C++', 'Clojure', 'CoffeeScript', 'Common Lisp', 'Coq', 'Crystal', 'Dart', 'DM', 'Elixir', 'Elm', 'Emacs Lisp', 'Erlang', 'F#', 'Fortran', 'Go', 'Groovy', 'Hashell', 'Java', 'Javascript', 'Jsonnet', 'Julia', 'Kotlin', 'Lua', 'MATLAB', 'Nix', 'Objective-C', 'Objective-C++', 'OCaml', 'Perl', 'PHP', 'PowerShell', 'Puppet', 'PureScript', 'Python', 'R', 'Ruby', 'Rust', 'Scala', 'Shell', 'Smalltalk', 'Swift', 'TSQL', 'TypeScript', 'Vala', 'Vim script', 'Visual Basic .NET', 'WebAssembly']
+
   return(
     <div>
       <form id='search' className='search-bar' onSubmit={handleSubmit}>
@@ -122,6 +131,7 @@ const SearchBar = () => {
           <input className='submit' type='submit' value='Search'/>
         </div>
         <div className={'click-for-advance'} onClick={handleSetAdvance}>Add filters +</div>
+        {keywordWarning? <div className='warning filter-warning'>**Please enter keyword first**</div> : null}
         {advance? 
         <div className='advance-methods'>
           <div>
@@ -141,8 +151,7 @@ const SearchBar = () => {
             <label>Language:</label>
             <select id='drop-down' name='language' form='search' onChange={handleChange}>
               <option value={language}>{language? language : '--'}</option>
-              <option value='Python'>Python</option>
-              <option value='Javascript'>Javascript</option>
+              {ghLans.map(lan => <option value={lan}>{lan}</option>)}
             </select>
           </div>
         </div>

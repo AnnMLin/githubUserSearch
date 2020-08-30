@@ -164,6 +164,10 @@ input:focus, select:focus{
   margin: 8px;;
 }
 
+#main .filter-warning {
+  margin-left: 43px;
+}
+
 #main .click-for-advance {
   font-size: 11px;
   text-decoration: underline;
