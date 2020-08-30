@@ -1,6 +1,7 @@
 :root {
   --padding-medium: 20px;
   --padding-small: 10px;
+  --padding-mini: 5px;
   --padding-between-lines: 5px;
   --margin-user-card: 13px;
   --user-card-width: 500px;
@@ -20,13 +21,13 @@ a {
   text-decoration: inherit;
 }
 
-input {
+input, select {
   background-color: rgb(0, 0, 0, 0);
   font-family: inherit;
   border: none;
 }
 
-input:focus{
+input:focus, select:focus{
   outline: none;
 }
 
@@ -39,6 +40,7 @@ input:focus{
 
 #home #icon {
   width: 40px;
+  height: 40px;
   margin-right: var(--padding-small);
 }
 
@@ -47,13 +49,18 @@ input:focus{
   width: 700px;
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+#home .main-methods {
+  display: flex;
+  flex-direction: row;
+}
+
 /*green bg*/
-#home form>div {
+#home .green {
   width: 500px;
   height: 40px;
   background-color: rgb(200, 220, 220);
@@ -70,14 +77,44 @@ input:focus{
   font-size: 17px;
 }
 
-/*button*/
-#home form>.submit {
-  font-size: 20px;
+#home .advance-methods {
+  display: flex;
+  flex-direction: column;
 }
 
-#home form>.submit:hover {
+#home .advance-methods>div {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-small);
+}
+
+#home .advance-methods input {
+  background-color: white;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+/*button*/
+#home form .submit {
+  font-size: 20px;
+  padding-left: var(--padding-small);
+}
+
+#home form .submit:hover {
   font-weight: bold;
   cursor: pointer
+}
+
+#home .click-for-advance {
+  padding: var(--padding-small);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+#home #drop-down {
+  background-color: white;
+  margin-top: var(--padding-mini);
 }
 
 #main {
@@ -91,7 +128,8 @@ input:focus{
 
 #main #icon {
   width: 31px;
-  margin-right: var(--padding-small);
+  height: 31px;
+  margin-right: var(--padding-mini);
 }
 
 /*form*/
@@ -100,10 +138,17 @@ input:focus{
   margin: var(--padding-medium);
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#main .main-methods {
+  display: flex;
+  flex-direction: row;
 }
 
 /*green bg*/
-#main form>div {
+#main .green {
   width: 300px;
   height: 31px;
   background-color: rgb(200, 220, 220);
@@ -119,13 +164,51 @@ input:focus{
   margin: 8px;;
 }
 
+#main .click-for-advance {
+  font-size: 11px;
+  text-decoration: underline;
+  display: flex;
+  align-self: flex-end;
+}
+
+.click-for-advance:hover {
+  cursor: pointer;
+}
+
+#main .advance-methods {
+  margin: var(--padding-small);
+  margin-left: 43px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  font-size: 13px;
+}
+
+#main .advance-methods>div {
+  padding: var(--padding-mini);
+  display: flex;
+  flex-direction: column;
+}
+
+#main .advance-methods input {
+  background: white;
+  margin-top: var(--padding-mini);
+  font-size: 13px;
+}
+
+#main .advance-methods select {
+  font-size: 13px;
+}
+
 /*button*/
-#main form>.submit {
+#main form .submit {
   display: none;
 }
 
-#results {
-  /* width: 80%; */
+.warning {
+  color: red;
+  font-size: 12px;
+  padding-top: 2px;
 }
 
 #total-count, .loading {
@@ -184,7 +267,6 @@ input:focus{
 }
 
 .user-bio {
-  /* height: 1.1em; */
   width: 1000px;
   padding-top: var(--padding-between-lines);
   font-size: 12px;
@@ -219,3 +301,4 @@ input:focus{
 .none {
   color: rgb(100, 100, 100);
 }
+
