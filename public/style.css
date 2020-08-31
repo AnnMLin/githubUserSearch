@@ -227,12 +227,12 @@ input:focus, select:focus{
   flex-direction: column;
   align-items: baseline;
   height: 0px;
-  animation: close 1s ease-in-out;
+  animation: close2 1s ease-in-out;
   overflow: hidden;
 }
 
-@keyframes close {
-  from {height: 190px;}
+@keyframes close2 {
+  from {height: 200px;}
   to {height: 0px;}
 }
 
@@ -240,14 +240,14 @@ input:focus, select:focus{
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  height: 190px;
+  height: 200px;
   animation: drop2 1s ease-in-out;
   overflow: hidden;
 }
 
 @keyframes drop2 {
   from {height: 0px;}
-  to {height: 190px;}
+  to {height: 200px;}
 }
 
 #main .advance-methods>div {
