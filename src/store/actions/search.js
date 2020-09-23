@@ -41,7 +41,7 @@ export const searchUsers = (keyword, APIPage) => dispatch => {
   const urlsLS = localStorage.getItem(`API${APIPage}`)
   if(urlsLS) {
     const urls = JSON.parse(urlsLS)
-    const fakePromise = () => dispatch(gotUrls(urls))
+    const fakePromise = dispatch(gotUrls(urls))
     return Promise.all([fakePromise])
   }
   
